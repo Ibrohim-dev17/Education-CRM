@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dars Jadvali - O'quv Markazi</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .phone-frame { width: 390px; height: 844px; background: #ffffff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #1e1e1e; }
+        .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-weight: 600; font-size: 14px; background: #ffffff; }
+        .header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
+        .back-btn { font-size: 18px; text-decoration: none; color: #1e293b; }
+        .header h1 { font-size: 18px; color: #1e293b; }
+        .content { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; }
+        .week-slider { display: flex; justify-content: space-between; background: white; padding: 10px 14px; border-radius: 14px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); align-items: center; }
+        .day-item { text-align: center; font-size: 11px; color: #64748b; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+        .day-item.active { background: #3b82f6; color: white; font-weight: 600; }
+        .day-item .num { font-size: 13px; font-weight: 700; margin-top: 2px; }
+        .schedule-slot { display: flex; gap: 10px; margin-bottom: 12px; align-items: flex-start; }
+        .time-label { font-size: 11px; color: #64748b; width: 65px; padding-top: 8px; font-weight: 600; }
+        .lesson-card { flex: 1; background: #eff6ff; border-left: 4px solid #3b82f6; padding: 10px 12px; border-radius: 10px; }
+        .lesson-card.green { background: #ecfdf5; border-left-color: #10b981; }
+        .lesson-card h4 { font-size: 13px; color: #1e293b; margin-bottom: 2px; }
+        .lesson-card p { font-size: 11px; color: #64748b; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: relative; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 45px; height: 45px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; position: absolute; top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar"><span>09:41</span><span>⚡</span></div>
+        <div class="header">
+            <a href="index.html" class="back-btn">←</a>
+            <h1>Dars jadvali</h1>
+            <span>📅</span>
+        </div>
+        <div class="content">
+            <div class="week-slider">
+                <span style="cursor: pointer; color: #64748b;">‹</span>
+                <div class="day-item">Dush<div class="num">20</div></div>
+                <div class="day-item">Sesh<div class="num">21</div></div>
+                <div class="day-item active">Chor<div class="num">22</div></div>
+                <div class="day-item">Pay<div class="num">23</div></div>
+                <div class="day-item">Juma<div class="num">24</div></div>
+                <span style="cursor: pointer; color: #64748b;">›</span>
+            </div>
+            <div class="schedule-slot">
+                <div class="time-label">08:00 - 09:30</div>
+                <div class="lesson-card">
+                    <h4>A1-1 guruhi</h4>
+                    <p>Ingliz tili • Xona 1</p>
+                </div>
+            </div>
+            <div class="schedule-slot">
+                <div class="time-label">10:00 - 11:30</div>
+                <div class="lesson-card green">
+                    <h4>B2-1 guruhi</h4>
+                    <p>Matematika • Xona 2</p>
+                </div>
+            </div>
+            <div class="schedule-slot">
+                <div class="time-label">12:00 - 13:30</div>
+                <div class="lesson-card" style="background: #fdf4ff; border-left-color: #a855f7;">
+                    <h4>C1-1 guruhi</h4>
+                    <p>Informatika • Xona 3</p>
+                </div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <a href="index.html" class="nav-item">🏠<span>Bosh sahifa</span></a>
+            <a href="students.html" class="nav-item">👥<span>O'quvchilar</span></a>
+            <a href="add_student.html" class="nav-center-btn">+</a>
+            <a href="payments.html" class="nav-item">💳<span>To'lovlar</span></a>
+            <a href="reports.html" class="nav-item">📊<span>Hisobotlar</span></a>
+        </div>
+    </div>
+</body>
+</html>
