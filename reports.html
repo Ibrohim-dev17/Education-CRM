@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Hisobotlar - O'quv Markazi</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .phone-frame { width: 390px; height: 844px; background: #ffffff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #1e1e1e; }
+        .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-weight: 600; font-size: 14px; background: #ffffff; }
+        .header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
+        .header h1 { font-size: 20px; color: #1e293b; }
+        .content { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; }
+        .dropdown-box { background: white; padding: 10px 14px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 14px; border: 1px solid #e2e8f0; font-size: 13px; font-weight: 500; }
+        .report-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; margin-bottom: 14px; }
+        .report-card { background: white; padding: 12px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .report-card .label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+        .report-card .val { font-size: 15px; font-weight: 700; color: #1e293b; }
+        .chart-box { background: white; padding: 16px; border-radius: 16px; margin-bottom: 20px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: relative; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 45px; height: 45px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; position: absolute; top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar"><span>09:41</span><span>⚡</span></div>
+        <div class="header">
+            <h1>Hisobotlar</h1>
+            <span>📊</span>
+        </div>
+        <div class="content">
+            <div class="dropdown-box">
+                <span>Oylik hisobot</span>
+                <span style="color: #64748b;">May, 2024 ▼</span>
+            </div>
+            <div class="report-grid">
+                <div class="report-card" style="border-top: 3px solid #10b981;">
+                    <div class="label">Daromad</div>
+                    <div class="val" style="color: #10b981;">25 680 000</div>
+                    <div style="font-size: 9px; color: #64748b;">so'm</div>
+                </div>
+                <div class="report-card" style="border-top: 3px solid #ef4444;">
+                    <div class="label">Xarajat</div>
+                    <div class="val" style="color: #ef4444;">7 230 000</div>
+                    <div style="font-size: 9px; color: #64748b;">so'm</div>
+                </div>
+                <div class="report-card" style="border-top: 3px solid #3b82f6;">
+                    <div class="label">Sof foyda</div>
+                    <div class="val" style="color: #3b82f6;">18 450 000</div>
+                    <div style="font-size: 9px; color: #64748b;">so'm</div>
+                </div>
+                <div class="report-card" style="border-top: 3px solid #8b5cf6;">
+                    <div class="label">O'quvchilar</div>
+                    <div class="val">256</div>
+                    <div style="font-size: 9px; color: #10b981;">+12 bu oyda</div>
+                </div>
+            </div>
+            <div class="chart-box">
+                <div style="font-size: 13px; font-weight: 600; margin-bottom: 12px; color: #1e293b;">Daromad grafigi</div>
+                <div style="height: 120px; display: flex; align-items: flex-end; justify-content: space-between; padding-top: 10px; border-bottom: 1px solid #e2e8f0;">
+                    <div style="width: 14px; background: #3b82f6; height: 35%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 14px; background: #3b82f6; height: 50%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 14px; background: #3b82f6; height: 65%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 14px; background: #3b82f6; height: 55%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 14px; background: #3b82f6; height: 85%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 14px; background: #3b82f6; height: 100%; border-radius: 4px 4px 0 0;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <a href="index.html" class="nav-item">🏠<span>Bosh sahifa</span></a>
+            <a href="students.html" class="nav-item">👥<span>O'quvchilar</span></a>
+            <a href="add_student.html" class="nav-center-btn">+</a>
+            <a href="payments.html" class="nav-item">💳<span>To'lovlar</span></a>
+            <a href="reports.html" class="nav-item active">📊<span>Hisobotlar</span></a>
+        </div>
+    </div>
+</body>
+</html>
