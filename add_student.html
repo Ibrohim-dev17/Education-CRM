@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'quvchi qo'shish</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8f9fc; color: #1e293b; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #fff; position: relative; padding-bottom: 50px; }
+        
+        .header { display: flex; align-items: center; padding: 20px; background: #fff; border-bottom: 1px solid #e2e8f0; gap: 15px; }
+        .header a { color: #0f172a; font-size: 18px; text-decoration: none; }
+        .header h1 { font-size: 18px; font-weight: 700; color: #0f172a; }
+
+        .form-container { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        .photo-upload { display: flex; justify-content: center; margin-bottom: 5px; }
+        .photo-box { width: 70px; height: 70px; border-radius: 50%; background: #f1f5f9; display: flex; align-items: center; justify-content: center; color: #64748b; font-size: 24px; border: 1px dashed #cbd5e1; cursor: pointer; }
+
+        .form-group { display: flex; flex-direction: column; gap: 6px; }
+        .form-group label { font-size: 13px; font-weight: 500; color: #475569; }
+        .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff; color: #0f172a; }
+        .form-group input:focus, .form-group select:focus { border-color: #2563eb; }
+
+        .save-btn { background: #2563eb; color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; width: 100%; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <a href="students.html"><i class="fa-solid fa-arrow-left"></i></a>
+        <h1>O'quvchi qo'shish</h1>
+    </div>
+
+    <form class="form-container" id="add-student-form" onsubmit="saveStudent(event)">
+        <div class="photo-upload">
+            <div class="photo-box"><i class="fa-regular fa-camera"></i></div>
+        </div>
+
+        <div class="form-group">
+            <label>Ism familiya *</label>
+            <input type="text" id="fullName" placeholder="Ism familiya kiriting" required>
+        </div>
+
+        <div class="form-group">
+            <label>Telefon raqam *</label>
+            <input type="text" id="phone" value="+998 90 123 45 67" required>
+        </div>
+
+        <div class="form-group">
+            <label>Tug'ilgan sana *</label>
+            <input type="text" id="birthDate" value="25.05.2010">
+        </div>
+
+        <div class="form-group">
+            <label>Ota-ona telefoni</label>
+            <input type="text" id="parentPhone" value="+998 90 987 65 43">
+        </div>
+
+        <div class="form-group">
+            <label>Guruh *</label>
+            <select id="groupName">
+                <option value="A1-1 guruhi">A1-1 guruhi</option>
+                <option value="B2-1 guruhi">B2-1 guruhi</option>
+                <option value="C1-1 guruhi">C1-1 guruhi</option>
+            </select>
+        </div>
+
+        <div class="form-group">
+            <label>Manzil</label>
+            <input type="text" id="address" placeholder="Manzil kiriting">
+        </div>
+
+        <button type="submit" class="save-btn">Saqlash</button>
+    </form>
+</div>
+
+<script>
+    function saveStudent(e) {
+        e.preventDefault();
+        
+        const fullName = document.getElementById('fullName').value;
+        const group = document.getElementById('groupName').value;
+        
+        const newStudent = {
+            fullName: fullName,
+            group: group,
+            amount: "1 200 000 so'm",
+            status: "debt"
+        };
+
+        let students = JSON.parse(localStorage.getItem('center_students')) || [];
+        students.push(newStudent);
+        localStorage.setItem('center_students', JSON.stringify(students));
+
+        alert("O'quvchi muvaffaqiyatli qo'shildi!");
+        window.location.href = "students.html";
+    }
+</script>
+</body>
+</html>
