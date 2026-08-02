@@ -45,10 +45,6 @@
         .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
         .chart-header h3 { font-size: 14px; font-weight: 600; color: #0f172a; }
         .chart-header select { border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; font-size: 12px; background: #fff; color: #64748b; outline: none; }
-        
-        .chart-body { height: 140px; display: flex; align-items: flex-end; justify-content: space-between; padding-top: 20px; border-bottom: 1px solid #e2e8f0; position: relative; }
-        .chart-bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; }
-        .chart-line-模拟 { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; height: 100px; }
 
         /* Bottom Navigation */
         .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #e2e8f0; z-index: 100; }
@@ -66,7 +62,7 @@
         <h1>Dashboard</h1>
         <div class="notif-icon">
             <i class="fa-regular fa-bell"></i>
-            <span class="notif-badge">3</span>
+            <span class="notif-badge">0</span>
         </div>
     </div>
 
@@ -82,35 +78,35 @@
         <div class="stats-grid">
             <div class="stat-card">
                 <span class="label">Jami o'quvchilar</span>
-                <span class="value" id="total-students">256</span>
-                <span class="sub green">+12 bu oyda</span>
+                <span class="value" id="total-students">0</span>
+                <span class="sub green">0 bu oyda</span>
             </div>
             <div class="stat-card">
                 <span class="label">Faol o'quvchilar</span>
-                <span class="value">182</span>
-                <span class="sub" style="color: #64748b;">71%</span>
+                <span class="value" id="active-students">0</span>
+                <span class="sub" style="color: #64748b;">0%</span>
             </div>
             <div class="stat-card">
-                <span class="label">Qardorlar</span>
-                <span class="value" id="total-debtors">38</span>
-                <span class="sub red">-12%</span>
+                <span class="label">Qarzdorlar</span>
+                <span class="value" id="total-debtors">0</span>
+                <span class="sub red">0%</span>
             </div>
         </div>
 
         <div class="fin-grid">
             <div class="fin-card">
                 <span class="label">Bugungi tushum</span>
-                <span class="value">1 850 000</span>
+                <span class="value" id="today-income">0</span>
                 <span class="curr">so'm</span>
             </div>
             <div class="fin-card">
                 <span class="label">Oylik tushum</span>
-                <span class="value">25 680 000</span>
+                <span class="value" id="month-income">0</span>
                 <span class="curr">so'm</span>
             </div>
             <div class="fin-card">
                 <span class="label">Oylik foyda</span>
-                <span class="value">18 450 000</span>
+                <span class="value" id="month-profit">0</span>
                 <span class="curr">so'm</span>
             </div>
         </div>
@@ -122,7 +118,6 @@
                     <option>May, 2024</option>
                 </select>
             </div>
-            <!-- Oddiy vizualizatsiya -->
             <div style="font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 10px;">
                 <span>Dek</span><span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span style="color:#2563eb; font-weight:600;">May</span>
             </div>
@@ -155,12 +150,15 @@
 </div>
 
 <script>
-    // Dinamik ma'lumotlarni localStorage'dan o'qish (Real-time ishlashi uchun)
+    // Real vaqtda localStorage'dan ma'lumotlarni o'qib Dashboard statistikasini yangilash
     document.addEventListener("DOMContentLoaded", () => {
         const students = JSON.parse(localStorage.getItem('center_students')) || [];
-        if(students.length > 0) {
-            document.getElementById('total-students').innerText = 256 + students.length;
-        }
+        document.getElementById('total-students').innerText = students.length;
+        
+        // Qarzdorlarni hisoblash
+        const debtors = students.filter(st => st.status === 'debt').length;
+        document.getElementById('total-debtors').innerText = debtors;
+        document.getElementById('active-students').innerText = students.length - debtors;
     });
 </script>
 </body>
