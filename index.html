@@ -3,163 +3,93 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>O'quv Markazi - Dashboard</title>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <title>Dashboard - O'quv Markazi</title>
     <style>
-        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
-        body { background-color: #f8f9fc; color: #1e293b; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #f8f9fc; position: relative; padding-bottom: 90px; }
-        
-        /* Header */
-        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border-bottom: 1px solid #e2e8f0; }
-        .header h1 { font-size: 20px; font-weight: 700; color: #0f172a; }
-        .header .notif-icon { position: relative; font-size: 20px; color: #64748b; cursor: pointer; }
-        .header .notif-badge { position: absolute; top: -5px; right: -5px; background: #ef4444; color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 10px; font-weight: 600; }
-
-        /* Content */
-        .content { padding: 16px; }
-        .date-card { background: #fff; padding: 14px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 16px; }
-        .date-card span { font-size: 13px; color: #64748b; }
-        .date-card strong { font-size: 14px; color: #2563eb; }
-        .date-card i { color: #2563eb; font-size: 18px; }
-
-        /* Stats Grid */
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .phone-frame { width: 390px; height: 844px; background: #ffffff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #1e1e1e; }
+        .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-weight: 600; font-size: 14px; background: #ffffff; }
+        .header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
+        .header h1 { font-size: 20px; color: #1e293b; }
+        .notification-icon { position: relative; font-size: 20px; cursor: pointer; }
+        .notification-badge { position: absolute; top: -5px; right: -5px; background: #ef4444; color: white; font-size: 10px; padding: 2px 5px; border-radius: 10px; }
+        .content { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; }
+        .date-card { background: #3b82f6; color: white; padding: 14px 16px; border-radius: 16px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; }
         .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
-        .stat-card { background: #fff; padding: 14px 10px; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .stat-card .label { font-size: 11px; color: #64748b; margin-bottom: 6px; display: block; }
-        .stat-card .value { font-size: 18px; font-weight: 700; color: #0f172a; }
-        .stat-card .sub { font-size: 10px; margin-top: 4px; display: block; }
-        .stat-card .sub.green { color: #10b981; }
-        .stat-card .sub.red { color: #ef4444; }
-
-        /* Financial Stats Grid */
-        .fin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
-        .fin-card { background: #fff; padding: 14px 10px; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .fin-card .label { font-size: 11px; color: #64748b; margin-bottom: 6px; display: block; }
-        .fin-card .value { font-size: 14px; font-weight: 700; color: #0f172a; }
-        .fin-card .curr { font-size: 10px; color: #64748b; }
-
-        /* Chart Section */
-        .chart-section { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
-        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
-        .chart-header h3 { font-size: 14px; font-weight: 600; color: #0f172a; }
-        .chart-header select { border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; font-size: 12px; background: #fff; color: #64748b; outline: none; }
-
-        /* Bottom Navigation */
-        .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #e2e8f0; z-index: 100; }
-        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
-        .nav-item i { font-size: 18px; }
-        .nav-item.active { color: #2563eb; }
-        .nav-item.center-btn div { width: 44px; height: 44px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4); margin-top: -22px; }
-        .nav-item.center-btn { color: #2563eb; }
+        .stat-card { background: white; padding: 12px; border-radius: 14px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); text-align: center; }
+        .stat-card .label { font-size: 11px; color: #64748b; margin-bottom: 4px; }
+        .stat-card .value { font-size: 16px; font-weight: 700; color: #1e293b; }
+        .stat-card .sub { font-size: 10px; color: #10b981; margin-top: 4px; }
+        .finance-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+        .finance-card { background: white; padding: 12px; border-radius: 14px; text-align: left; }
+        .finance-card .label { font-size: 10px; color: #64748b; margin-bottom: 4px; }
+        .finance-card .value { font-size: 13px; font-weight: 700; color: #1e293b; }
+        .chart-box { background: white; padding: 16px; border-radius: 16px; margin-bottom: 20px; }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; font-size: 14px; font-weight: 600; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: relative; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 45px; height: 45px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; position: absolute; top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
     </style>
 </head>
 <body>
-
-<div class="app-container">
-    <div class="header">
-        <h1>Dashboard</h1>
-        <div class="notif-icon">
-            <i class="fa-regular fa-bell"></i>
-            <span class="notif-badge">0</span>
+    <div class="phone-frame">
+        <div class="status-bar"><span>09:41</span><span>⚡</span></div>
+        <div class="header">
+            <h1>Dashboard</h1>
+            <div class="notification-icon">🔔<span class="notification-badge" id="notifCount">3</span></div>
+        </div>
+        <div class="content">
+            <div class="date-card">
+                <div><div style="font-size: 11px; opacity: 0.8;">Bugungi sana</div><div style="font-weight: 700; font-size: 15px;" id="currentDate">25 May, 2024</div></div>
+                <div style="font-size: 20px;">📅</div>
+            </div>
+            <div class="stats-grid">
+                <div class="stat-card"><div class="label">Jami o'quvchilar</div><div class="value" id="totalStudents">256</div><div class="sub">+12 bu oyda</div></div>
+                <div class="stat-card"><div class="label">Faol o'quvchilar</div><div class="value" id="activeStudents">182</div><div class="sub">71%</div></div>
+                <div class="stat-card"><div class="label">Qarzdorlar</div><div class="value" id="debtStudents" style="color: #ef4444;">38</div><div class="sub">-12%</div></div>
+            </div>
+            <div class="finance-grid">
+                <div class="finance-card"><div class="label">Bugungi tushum</div><div class="value" id="todayIncome">1 850 000</div><div style="font-size: 9px; color: #64748b;">so'm</div></div>
+                <div class="finance-card"><div class="label">Oylik tushum</div><div class="value" id="monthIncome">25 680 000</div><div style="font-size: 9px; color: #64748b;">so'm</div></div>
+                <div class="finance-card"><div class="label">Oylik foyda</div><div class="value" id="monthProfit">18 450 000</div><div style="font-size: 9px; color: #64748b;">so'm</div></div>
+            </div>
+            <div class="chart-box">
+                <div class="chart-header"><span>Daromad grafigi (Oylik)</span><span style="font-size: 12px; color: #64748b;">May, 2024 ▼</span></div>
+                <div style="height: 100px; display: flex; align-items: flex-end; justify-content: space-between; padding-top: 10px; border-bottom: 1px solid #e2e8f0;">
+                    <div style="width: 12px; background: #3b82f6; height: 30%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 12px; background: #3b82f6; height: 45%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 12px; background: #3b82f6; height: 60%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 12px; background: #3b82f6; height: 50%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 12px; background: #3b82f6; height: 80%; border-radius: 4px 4px 0 0;"></div>
+                    <div style="width: 12px; background: #3b82f6; height: 100%; border-radius: 4px 4px 0 0;"></div>
+                </div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <a href="index.html" class="nav-item active">🏠<span>Bosh sahifa</span></a>
+            <a href="students.html" class="nav-item">👥<span>O'quvchilar</span></a>
+            <a href="add_student.html" class="nav-center-btn">+</a>
+            <a href="payments.html" class="nav-item">💳<span>To'lovlar</span></a>
+            <a href="reports.html" class="nav-item">📊<span>Hisobotlar</span></a>
         </div>
     </div>
+    <script>
+        // Real vaqt rejimida boshqa sahifalar bilan ma'lumot almashish
+        window.addEventListener('storage', () => {
+            loadDashboardData();
+        });
 
-    <div class="content">
-        <div class="date-card">
-            <div>
-                <span>Bugungi sana</span>
-                <strong id="current-date">25 May, 2024</strong>
-            </div>
-            <i class="fa-regular fa-calendar"></i>
-        </div>
-
-        <div class="stats-grid">
-            <div class="stat-card">
-                <span class="label">Jami o'quvchilar</span>
-                <span class="value" id="total-students">0</span>
-                <span class="sub green">0 bu oyda</span>
-            </div>
-            <div class="stat-card">
-                <span class="label">Faol o'quvchilar</span>
-                <span class="value" id="active-students">0</span>
-                <span class="sub" style="color: #64748b;">0%</span>
-            </div>
-            <div class="stat-card">
-                <span class="label">Qarzdorlar</span>
-                <span class="value" id="total-debtors">0</span>
-                <span class="sub red">0%</span>
-            </div>
-        </div>
-
-        <div class="fin-grid">
-            <div class="fin-card">
-                <span class="label">Bugungi tushum</span>
-                <span class="value" id="today-income">0</span>
-                <span class="curr">so'm</span>
-            </div>
-            <div class="fin-card">
-                <span class="label">Oylik tushum</span>
-                <span class="value" id="month-income">0</span>
-                <span class="curr">so'm</span>
-            </div>
-            <div class="fin-card">
-                <span class="label">Oylik foyda</span>
-                <span class="value" id="month-profit">0</span>
-                <span class="curr">so'm</span>
-            </div>
-        </div>
-
-        <div class="chart-section">
-            <div class="chart-header">
-                <h3>Daromad grafigi (Oylik)</h3>
-                <select>
-                    <option>May, 2024</option>
-                </select>
-            </div>
-            <div style="font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 10px;">
-                <span>Dek</span><span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span style="color:#2563eb; font-weight:600;">May</span>
-            </div>
-        </div>
-    </div>
-
-    <!-- Pastki Navigatsiya -->
-    <div class="nav-bar">
-        <a href="index.html" class="nav-item active">
-            <i class="fa-solid fa-house"></i>
-            <span>Bosh sahifa</span>
-        </a>
-        <a href="students.html" class="nav-item">
-            <i class="fa-solid fa-user-group"></i>
-            <span>O'quvchilar</span>
-        </a>
-        <a href="add_student.html" class="nav-item center-btn">
-            <div><i class="fa-solid fa-plus"></i></div>
-            <span></span>
-        </a>
-        <a href="payments.html" class="nav-item">
-            <i class="fa-solid fa-wallet"></i>
-            <span>To'lovlar</span>
-        </a>
-        <a href="reports.html" class="nav-item">
-            <i class="fa-solid fa-chart-pie"></i>
-            <span>Hisobotlar</span>
-        </a>
-    </div>
-</div>
-
-<script>
-    // Real vaqtda localStorage'dan ma'lumotlarni o'qib Dashboard statistikasini yangilash
-    document.addEventListener("DOMContentLoaded", () => {
-        const students = JSON.parse(localStorage.getItem('center_students')) || [];
-        document.getElementById('total-students').innerText = students.length;
-        
-        // Qarzdorlarni hisoblash
-        const debtors = students.filter(st => st.status === 'debt').length;
-        document.getElementById('total-debtors').innerText = debtors;
-        document.getElementById('active-students').innerText = students.length - debtors;
-    });
-</script>
+        function loadDashboardData() {
+            const students = JSON.parse(localStorage.getItem('students')) || [
+                {name: "Akmalov Azizbek", balance: "1 200 000 so'm", status: "Qarzdor"},
+                {name: "Karimova Dildora", balance: "0 so'm", status: "To'langan"}
+            ];
+            document.getElementById('totalStudents').innerText = students.length;
+            const debtors = students.filter(s => s.status === "Qarzdor").length;
+            document.getElementById('debtStudents').innerText = debtors;
+        }
+        loadDashboardData();
+    </script>
 </body>
 </html>
