@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'quv Markazi - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8f9fc; color: #1e293b; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #f8f9fc; position: relative; padding-bottom: 90px; }
+        
+        /* Header */
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border-bottom: 1px solid #e2e8f0; }
+        .header h1 { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .header .notif-icon { position: relative; font-size: 20px; color: #64748b; cursor: pointer; }
+        .header .notif-badge { position: absolute; top: -5px; right: -5px; background: #ef4444; color: #fff; font-size: 10px; padding: 2px 5px; border-radius: 10px; font-weight: 600; }
+
+        /* Content */
+        .content { padding: 16px; }
+        .date-card { background: #fff; padding: 14px 16px; border-radius: 12px; display: flex; justify-content: space-between; align-items: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); margin-bottom: 16px; }
+        .date-card span { font-size: 13px; color: #64748b; }
+        .date-card strong { font-size: 14px; color: #2563eb; }
+        .date-card i { color: #2563eb; font-size: 18px; }
+
+        /* Stats Grid */
+        .stats-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 16px; }
+        .stat-card { background: #fff; padding: 14px 10px; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .stat-card .label { font-size: 11px; color: #64748b; margin-bottom: 6px; display: block; }
+        .stat-card .value { font-size: 18px; font-weight: 700; color: #0f172a; }
+        .stat-card .sub { font-size: 10px; margin-top: 4px; display: block; }
+        .stat-card .sub.green { color: #10b981; }
+        .stat-card .sub.red { color: #ef4444; }
+
+        /* Financial Stats Grid */
+        .fin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin-bottom: 20px; }
+        .fin-card { background: #fff; padding: 14px 10px; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .fin-card .label { font-size: 11px; color: #64748b; margin-bottom: 6px; display: block; }
+        .fin-card .value { font-size: 14px; font-weight: 700; color: #0f172a; }
+        .fin-card .curr { font-size: 10px; color: #64748b; }
+
+        /* Chart Section */
+        .chart-section { background: #fff; padding: 16px; border-radius: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.05); }
+        .chart-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 15px; }
+        .chart-header h3 { font-size: 14px; font-weight: 600; color: #0f172a; }
+        .chart-header select { border: 1px solid #e2e8f0; padding: 4px 8px; border-radius: 6px; font-size: 12px; background: #fff; color: #64748b; outline: none; }
+        
+        .chart-body { height: 140px; display: flex; align-items: flex-end; justify-content: space-between; padding-top: 20px; border-bottom: 1px solid #e2e8f0; position: relative; }
+        .chart-bar-group { display: flex; flex-direction: column; align-items: center; flex: 1; }
+        .chart-line-模拟 { display: flex; justify-content: space-between; align-items: flex-end; width: 100%; height: 100px; }
+
+        /* Bottom Navigation */
+        .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #e2e8f0; z-index: 100; }
+        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .nav-item i { font-size: 18px; }
+        .nav-item.active { color: #2563eb; }
+        .nav-item.center-btn div { width: 44px; height: 44px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4); margin-top: -22px; }
+        .nav-item.center-btn { color: #2563eb; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <h1>Dashboard</h1>
+        <div class="notif-icon">
+            <i class="fa-regular fa-bell"></i>
+            <span class="notif-badge">3</span>
+        </div>
+    </div>
+
+    <div class="content">
+        <div class="date-card">
+            <div>
+                <span>Bugungi sana</span>
+                <strong id="current-date">25 May, 2024</strong>
+            </div>
+            <i class="fa-regular fa-calendar"></i>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-card">
+                <span class="label">Jami o'quvchilar</span>
+                <span class="value" id="total-students">256</span>
+                <span class="sub green">+12 bu oyda</span>
+            </div>
+            <div class="stat-card">
+                <span class="label">Faol o'quvchilar</span>
+                <span class="value">182</span>
+                <span class="sub" style="color: #64748b;">71%</span>
+            </div>
+            <div class="stat-card">
+                <span class="label">Qardorlar</span>
+                <span class="value" id="total-debtors">38</span>
+                <span class="sub red">-12%</span>
+            </div>
+        </div>
+
+        <div class="fin-grid">
+            <div class="fin-card">
+                <span class="label">Bugungi tushum</span>
+                <span class="value">1 850 000</span>
+                <span class="curr">so'm</span>
+            </div>
+            <div class="fin-card">
+                <span class="label">Oylik tushum</span>
+                <span class="value">25 680 000</span>
+                <span class="curr">so'm</span>
+            </div>
+            <div class="fin-card">
+                <span class="label">Oylik foyda</span>
+                <span class="value">18 450 000</span>
+                <span class="curr">so'm</span>
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-header">
+                <h3>Daromad grafigi (Oylik)</h3>
+                <select>
+                    <option>May, 2024</option>
+                </select>
+            </div>
+            <!-- Oddiy vizualizatsiya -->
+            <div style="font-size: 11px; color: #64748b; display: flex; justify-content: space-between; margin-top: 10px;">
+                <span>Dek</span><span>Yan</span><span>Fev</span><span>Mar</span><span>Apr</span><span style="color:#2563eb; font-weight:600;">May</span>
+            </div>
+        </div>
+    </div>
+
+    <!-- Pastki Navigatsiya -->
+    <div class="nav-bar">
+        <a href="index.html" class="nav-item active">
+            <i class="fa-solid fa-house"></i>
+            <span>Bosh sahifa</span>
+        </a>
+        <a href="students.html" class="nav-item">
+            <i class="fa-solid fa-user-group"></i>
+            <span>O'quvchilar</span>
+        </a>
+        <a href="add_student.html" class="nav-item center-btn">
+            <div><i class="fa-solid fa-plus"></i></div>
+            <span></span>
+        </a>
+        <a href="payments.html" class="nav-item">
+            <i class="fa-solid fa-wallet"></i>
+            <span>To'lovlar</span>
+        </a>
+        <a href="reports.html" class="nav-item">
+            <i class="fa-solid fa-chart-pie"></i>
+            <span>Hisobotlar</span>
+        </a>
+    </div>
+</div>
+
+<script>
+    // Dinamik ma'lumotlarni localStorage'dan o'qish (Real-time ishlashi uchun)
+    document.addEventListener("DOMContentLoaded", () => {
+        const students = JSON.parse(localStorage.getItem('center_students')) || [];
+        if(students.length > 0) {
+            document.getElementById('total-students').innerText = 256 + students.length;
+        }
+    });
+</script>
+</body>
+</html>
