@@ -35,7 +35,7 @@
         <h1>O'quvchi qo'shish</h1>
     </div>
 
-    <form class="form-container" id="add-student-form" onsubmit="saveStudent(event)">
+    <form class="form-container" onsubmit="saveStudent(event)">
         <div class="photo-upload">
             <div class="photo-box"><i class="fa-regular fa-camera"></i></div>
         </div>
@@ -47,31 +47,17 @@
 
         <div class="form-group">
             <label>Telefon raqam *</label>
-            <input type="text" id="phone" value="+998 90 123 45 67" required>
-        </div>
-
-        <div class="form-group">
-            <label>Tug'ilgan sana *</label>
-            <input type="text" id="birthDate" value="25.05.2010">
-        </div>
-
-        <div class="form-group">
-            <label>Ota-ona telefoni</label>
-            <input type="text" id="parentPhone" value="+998 90 987 65 43">
+            <input type="text" id="phone" placeholder="+998 -- --- -- --" required>
         </div>
 
         <div class="form-group">
             <label>Guruh *</label>
-            <select id="groupName">
-                <option value="A1-1 guruhi">A1-1 guruhi</option>
-                <option value="B2-1 guruhi">B2-1 guruhi</option>
-                <option value="C1-1 guruhi">C1-1 guruhi</option>
-            </select>
+            <input type="text" id="groupName" placeholder="Guruh nomini kiriting" required>
         </div>
 
         <div class="form-group">
-            <label>Manzil</label>
-            <input type="text" id="address" placeholder="Manzil kiriting">
+            <label>Balans / Narx</label>
+            <input type="text" id="amount" placeholder="Summani kiriting">
         </div>
 
         <button type="submit" class="save-btn">Saqlash</button>
@@ -84,11 +70,12 @@
         
         const fullName = document.getElementById('fullName').value;
         const group = document.getElementById('groupName').value;
+        const amount = document.getElementById('amount').value || '0';
         
         const newStudent = {
             fullName: fullName,
             group: group,
-            amount: "1 200 000 so'm",
+            amount: amount,
             status: "debt"
         };
 
