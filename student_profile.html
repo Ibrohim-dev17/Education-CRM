@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O'quvchi Profili - O'quv Markazi</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
+        .phone-frame { width: 390px; height: 844px; background: #ffffff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #1e1e1e; }
+        .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-weight: 600; font-size: 14px; background: #ffffff; }
+        .header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
+        .back-btn { font-size: 18px; text-decoration: none; color: #1e293b; }
+        .header h1 { font-size: 18px; color: #1e293b; }
+        .content { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; }
+        .profile-card { background: white; padding: 16px; border-radius: 16px; display: flex; align-items: center; gap: 14px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .profile-avatar { width: 64px; height: 64px; border-radius: 50%; background: #cbd5e1; overflow: hidden; display: flex; align-items: center; justify-content: center; font-size: 24px; color: white; font-weight: bold; }
+        .profile-info h3 { font-size: 16px; color: #1e293b; margin-bottom: 4px; display: flex; align-items: center; gap: 8px; }
+        .profile-info p { font-size: 12px; color: #64748b; margin-bottom: 2px; }
+        .badge-active { background: #d1fae5; color: #10b981; font-size: 10px; padding: 2px 6px; border-radius: 4px; font-weight: 500; }
+        .action-buttons { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; text-align: center; }
+        .action-btn { background: white; padding: 10px 4px; border-radius: 12px; font-size: 10px; color: #3b82f6; text-decoration: none; box-shadow: 0 1px 3px rgba(0,0,0,0.02); display: flex; flex-direction: column; align-items: center; gap: 4px; border: 1px solid #e2e8f0; }
+        .details-box { background: white; border-radius: 16px; padding: 16px; margin-bottom: 16px; box-shadow: 0 2px 4px rgba(0,0,0,0.02); }
+        .details-row { display: flex; justify-content: space-between; padding: 10px 0; border-bottom: 1px solid #f1f5f9; font-size: 13px; }
+        .details-row:last-child { border-bottom: none; }
+        .details-row span:first-child { color: #64748b; }
+        .details-row span:last-child { color: #1e293b; font-weight: 500; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: relative; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 45px; height: 45px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; position: absolute; top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="phone-frame">
+        <div class="status-bar"><span>09:41</span><span>⚡</span></div>
+        <div class="header">
+            <a href="students.html" class="back-btn">←</a>
+            <h1 id="pageTitleName">Akmalov Azizbek</h1>
+            <span>...</span>
+        </div>
+        <div class="content">
+            <div class="profile-card">
+                <div class="profile-avatar" id="profileAvatar">A</div>
+                <div class="profile-info">
+                    <h3 id="studentName">Akmalov Azizbek <span class="badge-active">Faol</span></h3>
+                    <p>📚 A1-1 guruhi</p>
+                    <p>🆔 ID: 001</p>
+                    <p>🎂 01.01.2010 (14 yosh)</p>
+                </div>
+            </div>
+            <div class="action-buttons">
+                <a href="#" class="action-btn">✏️<span>Tahrirlash</span></a>
+                <a href="#" class="action-btn">💳<span>To'lov qo'shish</span></a>
+                <a href="#" class="action-btn">✅<span>Davomat</span></a>
+                <a href="#" class="action-btn">📞<span>Qo'ng'iroq</span></a>
+            </div>
+            <div class="details-box">
+                <div style="font-size: 14px; font-weight: 600; margin-bottom: 8px; color: #1e293b;">Ma'lumot</div>
+                <div class="details-row"><span>📞 Telefon</span><span id="phoneNum">+998 90 123 45 67</span></div>
+                <div class="details-row"><span>👨‍👩‍👧 Ota-onasi</span><span>Akmalov Rustam</span></div>
+                <div class="details-row"><span>📍 Manzil</span><span>Toshkent, Chilonzor</span></div>
+                <div class="details-row"><span>💬 Telegram</span><span>@azizbek_001</span></div>
+                <div class="details-row"><span>📅 Ro'yxatdan sana</span><span>10.01.2024</span></div>
+                <div class="details-row"><span>📝 Izoh</span><span>-</span></div>
+            </div>
+        </div>
+        <div class="nav-bar">
+            <a href="index.html" class="nav-item">🏠<span>Bosh sahifa</span></a>
+            <a href="students.html" class="nav-item active">👥<span>O'quvchilar</span></a>
+            <a href="add_student.html" class="nav-center-btn">+</a>
+            <a href="payments.html" class="nav-item">💳<span>To'lovlar</span></a>
+            <a href="reports.html" class="nav-item">📊<span>Hisobotlar</span></a>
+        </div>
+    </div>
+</body>
+</html>
