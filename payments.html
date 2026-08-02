@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>To'lovlar</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
+        body { background-color: #f8f9fc; color: #1e293b; display: flex; justify-content: center; }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #f8f9fc; position: relative; padding-bottom: 90px; }
+        
+        .header { display: flex; justify-content: space-between; align-items: center; padding: 20px; background: #fff; border-bottom: 1px solid #e2e8f0; }
+        .header h1 { font-size: 20px; font-weight: 700; color: #0f172a; }
+        .add-icon-btn { width: 32px; height: 32px; background: #2563eb; color: #fff; border-radius: 50%; display: flex; align-items: center; justify-content: center; text-decoration: none; font-size: 14px; }
+
+        .fin-summary { padding: 16px; display: grid; grid-template-columns: 1fr 1fr; gap: 10px; background: #fff; border-bottom: 1px solid #e2e8f0; }
+        .fin-box { background: #f1f5f9; padding: 12px; border-radius: 10px; }
+        .fin-box span { font-size: 11px; color: #64748b; display: block; margin-bottom: 4px; }
+        .fin-box strong { font-size: 14px; font-weight: 700; color: #0f172a; }
+
+        .payments-list { padding: 16px; display: flex; flex-direction: column; gap: 10px; }
+        .payment-item { background: #fff; padding: 12px 14px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; box-shadow: 0 1px 3px rgba(0,0,0,0.04); }
+        .payment-info h4 { font-size: 14px; font-weight: 600; color: #0f172a; margin-bottom: 2px; }
+        .payment-info p { font-size: 12px; color: #64748b; }
+        
+        .payment-status { text-align: right; }
+        .payment-status .amount { font-size: 13px; font-weight: 600; color: #0f172a; margin-bottom: 2px; }
+        .badge { font-size: 11px; padding: 2px 8px; border-radius: 6px; font-weight: 500; display: inline-block; }
+        .badge.paid { background: #f0fdf4; color: #10b981; }
+        .badge.debt { background: #fef2f2; color: #ef4444; }
+
+        .empty-state { text-align: center; padding: 40px 20px; color: #94a3b8; font-size: 14px; }
+
+        .nav-bar { position: fixed; bottom: 0; width: 100%; max-width: 480px; background: #fff; display: flex; justify-content: space-around; padding: 12px 0; border-top: 1px solid #e2e8f0; z-index: 100; }
+        .nav-item { text-align: center; color: #94a3b8; text-decoration: none; font-size: 10px; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+        .nav-item i { font-size: 18px; }
+        .nav-item.active { color: #2563eb; }
+        .nav-item.center-btn div { width: 44px; height: 44px; background: #2563eb; border-radius: 50%; display: flex; align-items: center; justify-content: center; color: #fff; box-shadow: 0 4px 10px rgba(37, 99, 235, 0.4); margin-top: -22px; }
+    </style>
+</head>
+<body>
+
+<div class="app-container">
+    <div class="header">
+        <h1>To'lovlar</h1>
+        <a href="add_student.html" class="add-icon-btn"><i class="fa-solid fa-plus"></i></a>
+    </div>
+
+    <div class="fin-summary">
+        <div class="fin-box">
+            <span>Jami to'langan</span>
+            <strong id="total-paid">0 so'm</strong>
+        </div>
+        <div class="fin-box">
+            <span>Qarzdorlik</span>
+            <strong id="total-debt">0 so'm</strong>
+        </div>
+    </div>
+
+    <div class="payments-list" id="payments-container">
+        <!-- Bo'sh holat -->
+    </div>
+
+    <div class="nav-bar">
+        <a href="index.html" class="nav-item"><i class="fa-solid fa-house"></i><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><i class="fa-solid fa-user-group"></i><span>O'quvchilar</span></a>
+        <a href="add_student.html" class="nav-item center-btn"><div><i class="fa-solid fa-plus"></i></div><span></span></a>
+        <a href="payments.html" class="nav-item active"><i class="fa-solid fa-wallet"></i><span>To'lovlar</span></a>
+        <a href="reports.html" class="nav-item"><i class="fa-solid fa-chart-pie"></i><span>Hisobotlar</span></a>
+    </div>
+</div>
+
+<script>
+    document.addEventListener("DOMContentLoaded", () => {
+        const container = document.getElementById('payments-container');
+        const students = JSON.parse(localStorage.getItem('center_students')) || [];
+
+        container.innerHTML = '';
+
+        if (students.length === 0) {
+            container.innerHTML = '<div class="empty-state">Hali to\'lovlar haqida ma\'lumot yo\'q.</div>';
+            return;
+        }
+
+        students.forEach(st => {
+            const item = document.createElement('div');
+            item.className = 'payment-item';
+            item.innerHTML = `
+                <div class="payment-info">
+                    <h4>${st.fullName}</h4>
+                    <p>${st.group || 'Guruhsiz'}</p>
+                </div>
+                <div class="payment-status">
+                    <div class="amount">${st.amount || '0'} so'm</div>
+                    <span class="badge ${st.status === 'debt' ? 'debt' : 'paid'}">${st.status === 'debt' ? 'Qarzdor' : "To'langan"}</span>
+                </div>
+            `;
+            container.appendChild(item);
+        });
+    });
+</script>
+</body>
+</html>
