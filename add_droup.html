@@ -9,23 +9,18 @@
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Inter', sans-serif; }
         body { background-color: #f8f9fc; color: #1e293b; display: flex; justify-content: center; }
-        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #fff; position: relative; padding-bottom: 40px; }
+        .app-container { width: 100%; max-width: 480px; min-height: 100vh; background: #fff; position: relative; padding-bottom: 50px; }
         
         .header { display: flex; align-items: center; padding: 20px; background: #fff; border-bottom: 1px solid #e2e8f0; gap: 15px; }
         .header a { color: #0f172a; font-size: 18px; text-decoration: none; }
         .header h1 { font-size: 18px; font-weight: 700; color: #0f172a; }
 
         .form-container { padding: 20px; display: flex; flex-direction: column; gap: 16px; }
+        
         .form-group { display: flex; flex-direction: column; gap: 6px; }
         .form-group label { font-size: 13px; font-weight: 500; color: #475569; }
         .form-group input, .form-group select { padding: 12px; border: 1px solid #cbd5e1; border-radius: 8px; font-size: 14px; outline: none; background: #fff; color: #0f172a; }
-        
-        .days-grid { display: grid; grid-template-columns: repeat(7, 1fr); gap: 6px; }
-        .day-btn { padding: 10px 0; text-align: center; border: 1px solid #cbd5e1; border-radius: 6px; font-size: 12px; font-weight: 600; background: #fff; color: #64748b; cursor: pointer; }
-        .day-btn.active { background: #2563eb; color: #fff; border-color: #2563eb; }
-
-        .time-row { display: flex; align-items: center; gap: 10px; }
-        .time-row input { flex: 1; }
+        .form-group input:focus, .form-group select:focus { border-color: #2563eb; }
 
         .save-btn { background: #2563eb; color: #fff; border: none; padding: 14px; border-radius: 8px; font-size: 15px; font-weight: 600; cursor: pointer; margin-top: 10px; width: 100%; }
     </style>
@@ -35,59 +30,28 @@
 <div class="app-container">
     <div class="header">
         <a href="groups.html"><i class="fa-solid fa-arrow-left"></i></a>
-        <h1>Guruh qo'shish</h1>
+        <h1>Yangi guruh qo'shish</h1>
     </div>
 
     <form class="form-container" onsubmit="saveGroup(event)">
         <div class="form-group">
             <label>Guruh nomi *</label>
-            <input type="text" id="groupName" placeholder="Guruh nomini kiriting" required>
+            <input type="text" id="groupName" placeholder="Masalan: Frontend N1" required>
         </div>
 
         <div class="form-group">
-            <label>Fan *</label>
-            <select id="groupSubject">
-                <option value="Ingliz tili">Ingliz tili</option>
-                <option value="Matematika">Matematika</option>
-                <option value="Informatika">Informatika</option>
-                <option value="Rus tili">Rus tili</option>
-            </select>
+            <label>Fan / Yo'nalish *</label>
+            <input type="text" id="groupSubject" placeholder="Masalan: Ingliz tili / Dasturlash" required>
         </div>
 
         <div class="form-group">
             <label>O'qituvchi *</label>
-            <select id="groupTeacher">
-                <option value="John Smith">John Smith</option>
-                <option value="Mary Brown">Mary Brown</option>
-                <option value="David Wilson">David Wilson</option>
-            </select>
+            <input type="text" id="groupTeacher" placeholder="O'qituvchi F.I.Sh." required>
         </div>
 
         <div class="form-group">
-            <label>Boshlanish sanasi *</label>
-            <input type="text" id="groupDate" value="25.05.2024">
-        </div>
-
-        <div class="form-group">
-            <label>Vaqt</label>
-            <div class="time-row">
-                <input type="text" value="09:00">
-                <span>-</span>
-                <input type="text" value="10:30">
-            </div>
-        </div>
-
-        <div class="form-group">
-            <label>Xona</label>
-            <select>
-                <option>1-xona</option>
-                <option>2-xona</option>
-            </select>
-        </div>
-
-        <div class="form-group">
-            <label>Narx (oyiga)</label>
-            <input type="text" id="groupPrice" value="1 200 000">
+            <label>Oylik narxi (so'm)</label>
+            <input type="text" id="groupPrice" placeholder="Masalan: 300000">
         </div>
 
         <button type="submit" class="save-btn">Saqlash</button>
@@ -97,12 +61,18 @@
 <script>
     function saveGroup(e) {
         e.preventDefault();
+        
         const name = document.getElementById('groupName').value;
         const subject = document.getElementById('groupSubject').value;
         const teacher = document.getElementById('groupTeacher').value;
         const price = document.getElementById('groupPrice').value;
 
-        const newGroup = { name, subject, teacher, price };
+        const newGroup = {
+            name: name,
+            subject: subject,
+            teacher: teacher,
+            price: price
+        };
 
         let groups = JSON.parse(localStorage.getItem('center_groups')) || [];
         groups.push(newGroup);
