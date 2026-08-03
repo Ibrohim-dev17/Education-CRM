@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Fanlar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .header { padding: 16px 24px; background: #ffffff; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 18px; color: #1e293b; }
+        .add-icon-btn { width: 36px; height: 36px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; text-decoration: none; font-size: 20px; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3); }
+        .content { flex: 1; max-width: 800px; width: 100%; margin: 0 auto; padding: 20px; }
+        .search-box { margin-bottom: 16px; }
+        .search-input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; outline: none; font-size: 14px; }
+        .card-list { background: white; border-radius: 14px; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .item-row { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f8fafc; }
+        .item-row:last-child { border-bottom: none; }
+        .item-left { display: flex; align-items: center; gap: 12px; }
+        .item-icon { width: 40px; height: 40px; border-radius: 10px; background: #d1fae5; display: flex; justify-content: center; align-items: center; color: #065f46; font-size: 18px; }
+        .item-info h4 { font-size: 14px; color: #1e293b; margin-bottom: 2px; }
+        .item-info p { font-size: 12px; color: #64748b; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; margin-bottom: 15px; }
+        svg { width: 22px; height: 22px; fill: currentColor; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Fanlar</h1>
+        <a href="add_subject.html" class="add-icon-btn">+</a>
+    </div>
+    
+    <div class="content" style="padding-bottom: 90px;">
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Qidirish..." onkeyup="filterSubjects()">
+        </div>
+
+        <div class="card-list" id="subjectsListContainer">
+            <div style="text-align:center; color:#64748b; padding: 20px 0; font-size: 13px;">Ma'lumotlar topilmadi.</div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <a href="add_student.html" class="nav-center-btn"><svg viewBox="0 0 24 24" style="width: 26px; height: 26px; fill: white;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></a>
+        <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-1.99.9-1.99 2L1 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg><span>To'lovlar</span></a>
+        <a href="reports.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Hisobotlar</span></a>
+    </div>
+
+    <script>
+        function renderSubjects(query = '') {
+            const subjects = JSON.parse(localStorage.getItem('subjects')) || [];
+            const container = document.getElementById('subjectsListContainer');
+
+            let filtered = subjects.filter(s => s.name && s.name.toLowerCase().includes(query.toLowerCase()));
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:#64748b; padding: 20px 0; font-size: 13px;">Ma'lumot topilmadi.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            filtered.forEach(s => {
+                container.innerHTML += `
+                    <div class="item-row">
+                        <div class="item-left">
+                            <div class="item-icon">📚</div>
+                            <div class="item-info">
+                                <h4>${s.name}</h4>
+                                <p>${s.count || '0 guruh'}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        function filterSubjects() {
+            const query = document.getElementById('searchInput').value;
+            renderSubjects(query);
+        }
+
+        renderSubjects();
+    </script>
+</body>
+</html>
