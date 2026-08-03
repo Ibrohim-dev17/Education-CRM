@@ -18,7 +18,7 @@
         .form-control:focus { border-color: #3b82f6; background: #fff; }
         .submit-btn { width: 100%; padding: 14px; background: #3b82f6; color: white; border: none; border-radius: 12px; font-weight: 600; font-size: 15px; cursor: pointer; margin-top: 10px; }
         .submit-btn:hover { background: #2563eb; }
-        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; z-index: 100; }
         .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; }
         .nav-item.active { color: #3b82f6; }
         .nav-center-btn { width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; margin-bottom: 15px; }
@@ -74,6 +74,12 @@
             const students = JSON.parse(localStorage.getItem('students')) || [];
             students.push({ name, group, balance, status });
             localStorage.setItem('students', JSON.stringify(students));
+
+            // Activity logga qo'shish
+            const activities = JSON.parse(localStorage.getItem('activities')) || [];
+            const timeStr = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+            activities.unshift({ text: `Yangi o'quvchi qo'shildi: ${name} (${group})`, time: timeStr });
+            localStorage.setItem('activities', JSON.stringify(activities));
 
             window.location.href = 'students.html';
         }
