@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Shartnomalar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #fff; color: #111; display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
+        .content { flex: 1; overflow-y: auto; padding: 16px 20px 90px 20px; display: flex; flex-direction: column; gap: 16px; }
+        .app-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #F0F2F5; }
+        .app-header h1 { font-size: 17px; font-weight: 600; color: #111; }
+        .header-actions { display: flex; gap: 8px; align-items: center; }
+        .action-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: #111; }
+        .add-small-btn { background-color: #0066FF; color: white; border: none; width: 32px; height: 32px; border-radius: 50%; display: flex; align-items: center; justify-content: center; cursor: pointer; }
+        .search-box { display: flex; align-items: center; background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 12px; padding: 10px 14px; gap: 10px; }
+        .search-box input { border: none; background: transparent; outline: none; font-size: 14px; width: 100%; }
+        .empty-state { text-align: center; color: #9CA3AF; padding: 40px 0; font-size: 13px; font-style: italic; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; height: 75px; background: #ffffff; border-top: 1px solid #F0F2F5; display: flex; justify-content: space-around; align-items: center; padding: 0 10px 10px 10px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #9CA3AF; font-size: 10px; gap: 4px; flex: 1; }
+        .nav-item.active { color: #0066FF; }
+        .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+        .nav-center-btn-wrapper { flex: 1; display: flex; justify-content: center; position: relative; top: -14px; }
+        .nav-center-btn { width: 48px; height: 48px; background-color: #0066FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 12px rgba(0,102,255,0.4); cursor: pointer; color: #fff; }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <h1>Shartnomalar</h1>
+        <div class="header-actions">
+            <button class="action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><polygon points="22 3 2 3 10 12.46 10 19 14 21 14 12.46 22 3"></polygon></svg></button>
+            <button class="add-small-btn"><svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button>
+        </div>
+    </div>
+    <div class="content">
+        <div class="search-box">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#9CA3AF" stroke-width="2"><circle cx="11" cy="11" r="8"></circle><line x1="21" y1="21" x2="16.65" y2="16.65"></line></svg>
+            <input type="text" placeholder="Qidirish...">
+        </div>
+        <div class="empty-state">Hozircha shartnomalar mavjud emas</div>
+    </div>
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <div class="nav-center-btn-wrapper"><button class="nav-center-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></button></div>
+        <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span>To'lovlar</span></a>
+        <a href="menu.html" class="nav-item active"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Menyu</span></a>
+    </div>
+</body>
+</html>
