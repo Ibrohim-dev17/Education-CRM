@@ -6,44 +6,40 @@
     <title>Dars Jadvali</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
         .header { padding: 16px 24px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
         .header h1 { font-size: 20px; color: #1e293b; }
-        .content { flex: 1; max-width: 800px; width: 100%; margin: 0 auto; padding: 20px; }
+        .content { flex: 1; width: 100%; margin: 0 auto; padding: 20px; padding-bottom: 90px; }
         .week-slider { display: flex; justify-content: space-between; background: white; padding: 12px 16px; border-radius: 14px; margin-bottom: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); align-items: center; }
-        .day-item { text-align: center; font-size: 12px; color: #64748b; padding: 8px 12px; border-radius: 10px; cursor: pointer; }
+        .day-item { text-align: center; font-size: 12px; color: #64748b; padding: 8px 10px; border-radius: 10px; cursor: pointer; flex: 1; }
         .day-item.active { background: #3b82f6; color: white; font-weight: 600; }
-        .day-item .num { font-size: 14px; font-weight: 700; margin-top: 2px; }
+        .day-item .num { font-size: 13px; font-weight: 700; margin-top: 2px; }
         .schedule-slot { display: flex; gap: 12px; margin-bottom: 14px; align-items: flex-start; background: white; padding: 14px 18px; border-radius: 14px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .time-label { font-size: 12px; color: #64748b; width: 90px; padding-top: 4px; font-weight: 600; }
+        .time-label { font-size: 12px; color: #3b82f6; width: 90px; padding-top: 2px; font-weight: 600; }
         .lesson-info h4 { font-size: 15px; color: #1e293b; margin-bottom: 3px; }
         .lesson-info p { font-size: 12px; color: #64748b; }
-        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; }
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; flex: 1; }
         .nav-item.active { color: #3b82f6; }
-        .nav-center-btn { width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; margin-bottom: 15px; }
+        .nav-center-btn { width: 48px; height: 48px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; position: relative; top: -10px; }
         svg { width: 22px; height: 22px; fill: currentColor; }
     </style>
 </head>
 <body>
     <div class="header">
         <h1>Dars jadvali</h1>
-        <svg viewBox="0 0 24 24" style="fill: #64748b;"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
+        <svg viewBox="0 0 24 24" style="fill: #64748b; width:22px; height:22px;"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
     </div>
-    <div class="content" style="padding-bottom: 90px;">
-        <div class="week-slider">
-            <span style="cursor: pointer; color: #64748b; font-weight: bold;">‹</span>
-            <div class="day-item">Dush<div class="num">--</div></div>
-            <div class="day-item">Sesh<div class="num">--</div></div>
-            <div class="day-item active">Chor<div class="num">--</div></div>
-            <div class="day-item">Pay<div class="num">--</div></div>
-            <div class="day-item">Juma<div class="num">--</div></div>
-            <span style="cursor: pointer; color: #64748b; font-weight: bold;">›</span>
+    
+    <div class="content">
+        <div class="week-slider" id="weekSlider">
+            <!-- Kunlar dinamik generatsiya qilinadi -->
         </div>
         <div id="scheduleContainer">
-            <div style="text-align:center; color:#64748b; margin-top:40px; font-size:14px;">Hozircha darslar belgilanmagan.</div>
+            <!-- Darslar dinamik ravishda chiqadi -->
         </div>
     </div>
+
     <div class="nav-bar">
         <a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Bosh sahifa</span></a>
         <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
@@ -51,5 +47,72 @@
         <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-1.99.9-1.99 2L1 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg><span>To'lovlar</span></a>
         <a href="reports.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Hisobotlar</span></a>
     </div>
+
+    <script>
+        const days = [
+            { name: "Dush", dayIndex: 1 },
+            { name: "Sesh", dayIndex: 2 },
+            { name: "Chor", dayIndex: 3 },
+            { name: "Pay", dayIndex: 4 },
+            { name: "Juma", dayIndex: 5 },
+            { name: "Shan", dayIndex: 6 }
+        ];
+
+        let selectedDay = 1; // Standart Dushanba
+
+        function renderWeekSlider() {
+            const slider = document.getElementById('weekSlider');
+            slider.innerHTML = `<span style="cursor: pointer; color: #64748b; font-weight: bold;" onclick="changeDay(-1)">‹</span>`;
+            
+            days.forEach(d => {
+                const isActive = d.dayIndex === selectedDay ? 'active' : '';
+                slider.innerHTML += `
+                    <div class="day-item ${isActive}" onclick="selectDay(${d.dayIndex})">
+                        ${d.name}
+                        <div class="num">${d.dayIndex + 10}</div>
+                    </div>
+                `;
+            });
+
+            slider.innerHTML += `<span style="cursor: pointer; color: #64748b; font-weight: bold;" onclick="changeDay(1)">›</span>`;
+            renderSchedule();
+        }
+
+        function selectDay(index) {
+            selectedDay = index;
+            renderWeekSlider();
+        }
+
+        function changeDay(direction) {
+            selectedDay += direction;
+            if (selectedDay < 1) selectedDay = 1;
+            if (selectedDay > 6) selectedDay = 6;
+            renderWeekSlider();
+        }
+
+        function renderSchedule() {
+            const container = document.getElementById('scheduleContainer');
+            // LocalStorage'dan o'quvchilar yoki darslarni olish (ma'lumot bo'lmasa bo'sh chiqadi)
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            
+            // Misol uchun, o'quvchilar ro'yxatidan shu kunga moslashtirib chiqarish yoki umumiy darslar bazasi
+            if (students.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:#64748b; margin-top:40px; font-size:14px;">Hozircha darslar belgilanmagan.</div>`;
+                return;
+            }
+
+            container.innerHTML = students.map(s => `
+                <div class="schedule-slot">
+                    <div class="time-label">09:00 - 10:30</div>
+                    <div class="lesson-info">
+                        <h4>${s.name || 'Guruh / O\'quvchi'}</h4>
+                        <p>Fan: Ingliz tili | Tel: ${s.phone || 'Nomaʼlum'}</p>
+                    </div>
+                </div>
+            `).join('');
+        }
+
+        renderWeekSlider();
+    </script>
 </body>
 </html>
