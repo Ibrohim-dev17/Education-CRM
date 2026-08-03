@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Kalendar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; }
+        .header { padding: 16px 24px; background: #ffffff; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 18px; color: #1e293b; }
+        .content { flex: 1; max-width: 800px; width: 100%; margin: 0 auto; padding: 20px; }
+        
+        /* Kalendar paneli */
+        .cal-card { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 16px; }
+        .cal-header { display: flex; justify-content: space-between; align-items: center; margin-bottom: 16px; font-weight: 600; color: #1e293b; }
+        .cal-nav-btn { background: none; border: none; font-size: 16px; cursor: pointer; color: #64748b; padding: 4px 8px; }
+        
+        .cal-grid { display: grid; grid-template-columns: repeat(7, 1fr); text-align: center; gap: 4px; }
+        .cal-day-name { font-size: 11px; color: #94a3b8; font-weight: 500; padding-bottom: 8px; }
+        .cal-day { padding: 8px 0; font-size: 13px; font-weight: 500; color: #1e293b; border-radius: 50%; cursor: pointer; width: 32px; height: 32px; display: flex; justify-content: center; align-items: center; margin: 0 auto; }
+        .cal-day:hover { background: #f1f5f9; }
+        .cal-day.active { background: #3b82f6; color: white; font-weight: 600; box-shadow: 0 2px 6px rgba(59, 130, 246, 0.3); }
+
+        /* Kunlik jadval */
+        .day-schedule-title { font-size: 14px; font-weight: 600; color: #1e293b; margin-bottom: 12px; }
+        .sched-item { background: white; border-radius: 12px; padding: 14px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 10px; border-left: 4px solid #3b82f6; display: flex; justify-content: space-between; align-items: center; }
+        .sched-item.math { border-left-color: #10b981; }
+        .sched-item.exam { border-left-color: #8b5cf6; }
+        .sched-item.meeting { border-left-color: #f59e0b; }
+        
+        .sched-info h4 { font-size: 14px; color: #1e293b; margin-bottom: 3px; }
+        .sched-info p { font-size: 12px; color: #64748b; }
+        .sched-room { font-size: 12px; font-weight: 500; color: #64748b; text-align: right; }
+
+        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn { width: 50px; height: 50px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; margin-bottom: 15px; }
+        svg { width: 22px; height: 22px; fill: currentColor; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Kalendar</h1>
+        <svg viewBox="0 0 24 24" style="width:20px; height:20px; fill:#64748b; cursor:pointer;"><path d="M3 18h6v-2H3v2zM3 6v2h18V6H3zm0 7h12v-2H3v5z"/></svg>
+    </div>
+    
+    <div class="content" style="padding-bottom: 90px;">
+        <div class="cal-card">
+            <div class="cal-header">
+                <button class="cal-nav-btn">‹</button>
+                <span>May, 2024</span>
+                <button class="cal-nav-btn">›</button>
+            </div>
+            <div class="cal-grid">
+                <div class="cal-day-name">Du</div>
+                <div class="cal-day-name">Se</div>
+                <div class="cal-day-name">Ch</div>
+                <div class="cal-day-name">Pa</div>
+                <div class="cal-day-name">Ju</div>
+                <div class="cal-day-name">Sh</div>
+                <div class="cal-day-name">Ya</div>
+                
+                <div class="cal-day" style="color:#cbd5e1;">29</div>
+                <div class="cal-day" style="color:#cbd5e1;">30</div>
+                <div class="cal-day">1</div>
+                <div class="cal-day">2</div>
+                <div class="cal-day">3</div>
+                <div class="cal-day">4</div>
+                <div class="cal-day">5</div>
+                
+                <div class="cal-day">6</div>
+                <div class="cal-day">7</div>
+                <div class="cal-day">8</div>
+                <div class="cal-day">9</div>
+                <div class="cal-day">10</div>
+                <div class="cal-day">11</div>
+                <div class="cal-day">12</div>
+                
+                <div class="cal-day">13</div>
+                <div class="cal-day">14</div>
+                <div class="cal-day">15</div>
+                <div class="cal-day">16</div>
+                <div class="cal-day">17</div>
+                <div class="cal-day">18</div>
+                <div class="cal-day">19</div>
+                
+                <div class="cal-day">20</div>
+                <div class="cal-day">21</div>
+                <div class="cal-day active">22</div>
+                <div class="cal-day">23</div>
+                <div class="cal-day">24</div>
+                <div class="cal-day">25</div>
+                <div class="cal-day">26</div>
+            </div>
+        </div>
+
+        <div class="day-schedule-title">22 May, 2024 • Chorshanba</div>
+
+        <div class="sched-item">
+            <div class="sched-info">
+                <h4>Dars - A1-1 (Ingliz tili)</h4>
+                <p>08:00 - 09:30</p>
+            </div>
+            <div class="sched-room">1-xona</div>
+        </div>
+
+        <div class="sched-item math">
+            <div class="sched-info">
+                <h4>Dars - B2-1 (Matematika)</h4>
+                <p>10:00 - 11:30</p>
+            </div>
+            <div class="sched-room">2-xona</div>
+        </div>
+
+        <div class="sched-item exam">
+            <div class="sched-info">
+                <h4>Imtihon - Informatika</h4>
+                <p>14:00 - 15:30</p>
+            </div>
+            <div class="sched-room">3-xona</div>
+        </div>
+
+        <div class="sched-item meeting">
+            <div class="sched-info">
+                <h4>Uchrashuv (Ota-onalar)</h4>
+                <p>17:00 - 18:00</p>
+            </div>
+            <div class="sched-room">Ofis</div>
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <a href="index.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <a href="add_student.html" class="nav-center-btn"><svg viewBox="0 0 24 24" style="width: 26px; height: 26px; fill: white;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></a>
+        <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-1.99.9-1.99 2L1 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg><span>To'lovlar</span></a>
+        <a href="reports.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Hisobotlar</span></a>
+    </div>
+</body>
+</html>
