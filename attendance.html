@@ -3,100 +3,187 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Davomat - O'quv Markazi</title>
+    <title>Davomat</title>
     <style>
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
-        body { background-color: #f4f6f9; color: #333; display: flex; justify-content: center; align-items: center; min-height: 100vh; }
-        .phone-frame { width: 390px; height: 844px; background: #ffffff; border-radius: 40px; box-shadow: 0 20px 40px rgba(0,0,0,0.1); display: flex; flex-direction: column; overflow: hidden; position: relative; border: 10px solid #1e1e1e; }
-        .status-bar { height: 44px; display: flex; justify-content: space-between; align-items: center; padding: 0 24px; font-weight: 600; font-size: 14px; background: #ffffff; }
-        .header { padding: 16px 20px; display: flex; justify-content: space-between; align-items: center; background: #ffffff; border-bottom: 1px solid #f0f0f0; }
-        .back-btn { font-size: 18px; text-decoration: none; color: #1e293b; }
-        .header h1 { font-size: 18px; color: #1e293b; }
-        .content { flex: 1; overflow-y: auto; padding: 16px; background: #f8fafc; }
-        .date-picker-box { background: white; padding: 12px 16px; border-radius: 14px; display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .group-info-box { background: #eff6ff; border: 1px solid #dbeafe; padding: 12px 16px; border-radius: 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
-        .group-info-box h4 { font-size: 14px; color: #1e40af; margin-bottom: 2px; }
-        .group-info-box p { font-size: 11px; color: #3b82f6; }
-        .stats-row { display: flex; gap: 6px; margin-bottom: 14px; overflow-x: auto; padding-bottom: 4px; }
-        .stat-pill { background: white; padding: 8px 12px; border-radius: 10px; font-size: 11px; border: 1px solid #e2e8f0; white-space: nowrap; }
-        .attendance-card { background: white; padding: 12px 14px; border-radius: 12px; display: flex; align-items: center; justify-content: space-between; margin-bottom: 10px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
-        .att-info { display: flex; align-items: center; gap: 10px; }
-        .att-avatar { width: 36px; height: 36px; border-radius: 50%; background: #cbd5e1; display: flex; align-items: center; justify-content: center; font-size: 13px; color: white; font-weight: bold; }
-        .att-details h4 { font-size: 13px; color: #1e293b; }
-        .status-select { font-size: 11px; padding: 4px 8px; border-radius: 6px; border: 1px solid #cbd5e1; background: #fff; cursor: pointer; }
-        .save-btn-container { padding: 12px 16px; background: white; border-top: 1px solid #f0f0f0; }
-        .save-btn { width: 100%; background: #3b82f6; color: white; border: none; padding: 12px; border-radius: 12px; font-weight: 600; cursor: pointer; font-size: 14px; }
-        .nav-bar { height: 70px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: relative; }
-        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
+        .header { padding: 16px 24px; background: #ffffff; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .header-left { display: flex; align-items: center; gap: 16px; }
+        .back-btn { text-decoration: none; color: #64748b; font-size: 18px; }
+        .header h1 { font-size: 18px; color: #1e293b; text-align: center; flex: 1; }
+        .content { flex: 1; width: 100%; padding: 20px; }
+        
+        .filter-card { background: white; border-radius: 14px; padding: 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 16px; text-align: center; }
+        .date-navigator { display: flex; justify-content: space-between; align-items: center; font-weight: 600; color: #1e293b; margin-bottom: 10px; font-size: 15px; }
+        .group-sub-info { font-size: 13px; color: #64748b; margin-bottom: 4px; }
+        .group-time { font-size: 12px; color: #94a3b8; }
+
+        .stats-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 8px; margin-bottom: 16px; }
+        .stat-badge { background: white; padding: 10px 6px; border-radius: 12px; text-align: center; box-shadow: 0 1px 3px rgba(0,0,0,0.02); font-size: 12px; }
+        .stat-badge span { display: block; font-weight: bold; font-size: 14px; margin-top: 2px; }
+        .stat-badge.total span { color: #3b82f6; }
+        .stat-badge.keldi span { color: #10b981; }
+        .stat-badge.kelmadi span { color: #ef4444; }
+        .stat-badge.kechikdi span { color: #f59e0b; }
+
+        .attendance-list { background: white; border-radius: 14px; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); margin-bottom: 20px; }
+        .att-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f8fafc; }
+        .att-item:last-child { border-bottom: none; }
+        .att-student { display: flex; align-items: center; gap: 12px; }
+        .avatar-sm { width: 36px; height: 36px; border-radius: 50%; background: #e2e8f0; display: flex; justify-content: center; align-items: center; font-size: 12px; font-weight: bold; color: #64748b; overflow: hidden; }
+        .att-name { font-size: 14px; font-weight: 500; color: #1e293b; }
+        
+        .status-select-group { display: flex; gap: 6px; }
+        .status-btn { padding: 6px 12px; border-radius: 20px; font-size: 12px; font-weight: 500; border: 1px solid #e2e8f0; background: #fff; cursor: pointer; color: #64748b; }
+        .status-btn.keldi.active { background: #d1fae5; color: #065f46; border-color: #d1fae5; }
+        .status-btn.kelmadi.active { background: #fee2e2; color: #991b1b; border-color: #fee2e2; }
+        .status-btn.kechikdi.active { background: #fef3c7; color: #92400e; border-color: #fef3c7; }
+
+        .save-attendance-btn { width: 100%; padding: 14px; background: #3b82f6; color: white; border: none; border-radius: 12px; font-size: 15px; font-weight: 600; cursor: pointer; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.3); }
+        .save-attendance-btn:hover { background: #2563eb; }
+
+        .nav-bar { height: 75px; background: white; display: flex; justify-content: space-around; align-items: center; border-top: 1px solid #f0f0f0; position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; z-index: 100; padding: 0 10px 10px 10px; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 11px; gap: 4px; flex: 1; }
         .nav-item.active { color: #3b82f6; }
-        .nav-center-btn { width: 45px; height: 45px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; font-size: 24px; position: absolute; top: -20px; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+        .nav-center-btn { width: 48px; height: 48px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+        .nav-center-btn-wrapper { flex: 1; display: flex; justify-content: center; position: relative; top: -14px; }
+        svg.nav-svg { width: 22px; height: 22px; fill: currentColor; }
     </style>
 </head>
 <body>
-    <div class="phone-frame">
-        <div class="status-bar"><span>09:41</span><span>⚡</span></div>
-        <div class="header">
-            <a href="index.html" class="back-btn">←</a>
-            <h1>Davomat</h1>
-            <span>📅</span>
+    <div class="header">
+        <div class="header-left">
+            <a href="dashboard.html" class="back-btn">‹</a>
         </div>
-        <div class="content">
-            <div class="date-picker-box">
-                <span style="font-size: 13px; font-weight: 600;">📅 25 May, 2024</span>
-                <span style="font-size: 12px; color: #3b82f6; cursor: pointer;">O'zgartirish ›</span>
-            </div>
-            <div class="group-info-box">
-                <div>
-                    <h4>A1-1 guruhi • Ingliz tili</h4>
-                    <p>09:00 - 10:30</p>
-                </div>
-                <div style="font-size: 12px; font-weight: 600; color: #1e40af;">Jami: 12</div>
-            </div>
-            <div class="stats-row">
-                <div class="stat-pill" style="border-color: #dbeafe; color: #1e40af;">Barchasi: 12</div>
-                <div class="stat-pill" style="border-color: #d1fae5; color: #10b981;"> Keldi: 9</div>
-                <div class="stat-pill" style="border-color: #fee2e2; color: #ef4444;"> Kelmadi: 2</div>
-                <div class="stat-pill" style="border-color: #fef3c7; color: #d97706;"> Kechikdi: 1</div>
-            </div>
-            <div id="attendanceList">
-                <div class="attendance-card">
-                    <div class="att-info">
-                        <div class="att-avatar">A</div>
-                        <div class="att-details">
-                            <h4>Akmalov Azizbek</h4>
-                        </div>
-                    </div>
-                    <select class="status-select" style="color: #10b981; border-color: #d1fae5;">
-                        <option value="keldi">✅ Keldi</option>
-                        <option value="kelmadi">❌ Kelmadi</option>
-                        <option value="kechikdi">⏱ Kechikdi</option>
-                    </select>
-                </div>
-                <div class="attendance-card">
-                    <div class="att-info">
-                        <div class="att-avatar" style="background: #10b981;">K</div>
-                        <div class="att-details">
-                            <h4>Karimova Dildora</h4>
-                        </div>
-                    </div>
-                    <select class="status-select" style="color: #10b981; border-color: #d1fae5;">
-                        <option value="keldi">✅ Keldi</option>
-                        <option value="kelmadi">❌ Kelmadi</option>
-                        <option value="kechikdi">⏱ Kechikdi</option>
-                    </select>
-                </div>
-            </div>
-        </div>
-        <div class="save-btn-container">
-            <button class="save-btn" onclick="alert('Davomat saqlandi!')">Saqlash</button>
-        </div>
-        <div class="nav-bar">
-            <a href="index.html" class="nav-item">🏠<span>Bosh sahifa</span></a>
-            <a href="students.html" class="nav-item">👥<span>O'quvchilar</span></a>
-            <a href="add_student.html" class="nav-center-btn">+</a>
-            <a href="payments.html" class="nav-item">💳<span>To'lovlar</span></a>
-            <a href="reports.html" class="nav-item">📊<span>Hisobotlar</span></a>
-        </div>
+        <h1>Davomat</h1>
+        <svg style="width:20px; height:20px; fill:#64748b;" viewBox="0 0 24 24"><path d="M19 3h-1V1h-2v2H8V1H6v2H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zm0 16H5V8h14v11z"/></svg>
     </div>
+    
+    <div class="content" style="padding-bottom: 90px;">
+        <div class="filter-card">
+            <div class="date-navigator">
+                <span>‹</span>
+                <span id="currentDateLabel">Bugun</span>
+                <span>›</span>
+            </div>
+            <div class="group-sub-info">Barcha o'quvchilar</div>
+            <div class="group-time">Dars vaqti: Asosiy</div>
+        </div>
+
+        <div class="stats-grid">
+            <div class="stat-badge total">Barchasi<span id="statTotal">0</span></div>
+            <div class="stat-badge keldi">Keldi<span id="statKeldi">0</span></div>
+            <div class="stat-badge kelmadi">Kelmadi<span id="statKelmadi">0</span></div>
+            <div class="stat-badge kechikdi">Kechikdi<span id="statKechikdi">0</span></div>
+        </div>
+
+        <div class="attendance-list" id="attendanceListContainer">
+            <!-- Dinamik o'quvchilar ro'yxati shu yerga yuklanadi -->
+        </div>
+
+        <button class="save-attendance-btn" onclick="saveAttendance()">Saqlash</button>
+    </div>
+
+    <div class="nav-bar">
+        <a href="dashboard.html" class="nav-item"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <div class="nav-center-btn-wrapper"><a href="add_student.html" class="nav-center-btn"><svg viewBox="0 0 24 24" style="width: 26px; height: 26px; fill: white;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></a></div>
+        <a href="payments.html" class="nav-item"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-1.99.9-1.99 2L1 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg><span>To'lovlar</span></a>
+        <a href="menu.html" class="nav-item"><svg class="nav-svg" viewBox="0 0 24 24"><path d="M19 3H5c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h14c1.1 0 2-.9 2-2V5c0-1.1-.9-2-2-2zM9 17H7v-7h2v7zm4 0h-2V7h2v10zm4 0h-2v-4h2v4z"/></svg><span>Menyu</span></a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            loadStudentsAttendance();
+            updateCounters();
+
+            // Sana ko'rsatish
+            const options = { day: 'numeric', month: 'long', year: 'numeric' };
+            document.getElementById('currentDateLabel').innerText = new Date().toLocaleDateString('uz-UZ', options);
+        });
+
+        function loadStudentsAttendance() {
+            const container = document.getElementById('attendanceListContainer');
+            const students = JSON.parse(localStorage.getItem('students') || '[]');
+
+            if (students.length === 0) {
+                container.innerHTML = `<div style="text-align:center; padding: 20px; color: #94a3b8; font-size: 13px;">Hozircha o'quvchilar qo'shilmagan. Avval o'quvchi qo'shing.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            students.forEach((student, index) => {
+                let initials = student.name ? student.name.split(' ').map(n => n[0]).join('').substring(0, 2).toUpperCase() : 'O';
+                
+                let item = document.createElement('div');
+                item.className = 'att-item';
+                item.innerHTML = `
+                    <div class="att-student">
+                        <div class="avatar-sm">${initials}</div>
+                        <div class="att-name" data-id="${student.id || index}">${student.name}</div>
+                    </div>
+                    <div class="status-select-group" data-student-index="${index}">
+                        <button class="status-btn keldi active" onclick="setStatus(this, 'keldi')">Keldi</button>
+                        <button class="status-btn kelmadi" onclick="setStatus(this, 'kelmadi')">Kelmadi</button>
+                        <button class="status-btn kechikdi" onclick="setStatus(this, 'kechikdi')">Kechikdi</button>
+                    </div>
+                `;
+                container.appendChild(item);
+            });
+            updateCounters();
+        }
+
+        function setStatus(button, type) {
+            const group = button.parentElement;
+            group.querySelectorAll('.status-btn').forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+            updateCounters();
+        }
+
+        function updateCounters() {
+            const groups = document.querySelectorAll('.status-select-group');
+            let keldi = 0, kelmadi = 0, kechikdi = 0;
+
+            groups.forEach(g => {
+                let activeBtn = g.querySelector('.status-btn.active');
+                if (activeBtn) {
+                    if (activeBtn.classList.contains('keldi')) keldi++;
+                    else if (activeBtn.classList.contains('kelmadi')) kelmadi++;
+                    else if (activeBtn.classList.contains('kechikdi')) kechikdi++;
+                }
+            });
+
+            document.getElementById('statTotal').innerText = groups.length;
+            document.getElementById('statKeldi').innerText = keldi;
+            document.getElementById('statKelmadi').innerText = kelmadi;
+            document.getElementById('statKechikdi').innerText = kechikdi;
+        }
+
+        function saveAttendance() {
+            const groups = document.querySelectorAll('.status-select-group');
+            const students = JSON.parse(localStorage.getItem('students') || '[]');
+            let records = [];
+
+            groups.forEach(g => {
+                let index = g.getAttribute('data-student-index');
+                let activeBtn = g.querySelector('.status-btn.active');
+                let status = 'keldi';
+                if(activeBtn.classList.contains('kelmadi')) status = 'kelmadi';
+                if(activeBtn.classList.contains('kechikdi')) status = 'kechikdi';
+
+                if(students[index]) {
+                    records.push({
+                        studentName: students[index].name,
+                        status: status,
+                        date: new Date().toISOString()
+                    });
+                }
+            });
+
+            localStorage.setItem('attendance_records', JSON.stringify(records));
+            alert("Davomat muvaffaqiyatli saqlandi!");
+            window.location.href = 'attendance_stats.html';
+        }
+    </script>
 </body>
 </html>
