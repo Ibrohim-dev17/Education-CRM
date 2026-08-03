@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Qarzdorlar</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #f4f6f9; color: #333; display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
+        .header { padding: 16px 24px; background: #ffffff; border-bottom: 1px solid #f0f0f0; display: flex; justify-content: space-between; align-items: center; }
+        .header h1 { font-size: 18px; color: #1e293b; }
+        .content { flex: 1; width: 100%; padding: 16px 20px 90px 20px; overflow-y: auto; }
+        .summary-card { background: #fee2e2; border-radius: 14px; padding: 16px; margin-bottom: 16px; display: flex; justify-content: space-between; align-items: center; }
+        .summary-box p { font-size: 12px; color: #b91c1c; margin-bottom: 4px; font-weight: 500; }
+        .summary-box h2 { font-size: 18px; color: #991b1b; }
+        .search-box { margin-bottom: 16px; }
+        .search-input { width: 100%; padding: 12px 16px; border-radius: 12px; border: 1px solid #e2e8f0; background: #ffffff; outline: none; font-size: 14px; }
+        .search-input:focus { border-color: #3b82f6; }
+        .card-list { background: white; border-radius: 14px; padding: 12px 16px; box-shadow: 0 1px 3px rgba(0,0,0,0.02); }
+        .debtor-item { display: flex; justify-content: space-between; align-items: center; padding: 12px 0; border-bottom: 1px solid #f8fafc; }
+        .debtor-item:last-child { border-bottom: none; }
+        .debtor-info h4 { font-size: 14px; color: #1e293b; margin-bottom: 2px; }
+        .debtor-info p { font-size: 12px; color: #64748b; }
+        .debtor-amount { text-align: right; }
+        .debtor-amount h4 { font-size: 14px; color: #ef4444; margin-bottom: 2px; }
+        .debtor-amount p { font-size: 11px; color: #b91c1c; }
+        .nav-bar { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; height: 75px; background: #ffffff; border-top: 1px solid #f0f0f0; display: flex; justify-content: space-around; align-items: center; padding: 0 10px 10px 10px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #94a3b8; font-size: 10px; gap: 4px; flex: 1; }
+        .nav-item.active { color: #3b82f6; }
+        .nav-center-btn-wrapper { flex: 1; display: flex; justify-content: center; position: relative; top: -14px; }
+        .nav-center-btn { width: 48px; height: 48px; background: #3b82f6; border-radius: 50%; display: flex; justify-content: center; align-items: center; color: white; box-shadow: 0 4px 10px rgba(59, 130, 246, 0.4); text-decoration: none; }
+        svg { width: 22px; height: 22px; fill: currentColor; }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Qarzdorlar</h1>
+    </div>
+    
+    <div class="content">
+        <div class="summary-card">
+            <div class="summary-box">
+                <p>Jami qarzdorlar</p>
+                <h2 id="totalDebtorsCount">0 ta</h2>
+            </div>
+            <div class="summary-box" style="text-align: right;">
+                <p>Jami qarz summasi</p>
+                <h2 id="totalDebtAmount">0 so'm</h2>
+            </div>
+        </div>
+
+        <div class="search-box">
+            <input type="text" id="searchInput" class="search-input" placeholder="Qarzdorni qidirish..." onkeyup="filterDebtors()">
+        </div>
+
+        <div class="card-list" id="debtorsListContainer">
+            <!-- Dinamik to'ldiriladi -->
+        </div>
+    </div>
+
+    <div class="nav-bar">
+        <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <div class="nav-center-btn-wrapper"><a href="add_student.html" class="nav-center-btn"><svg viewBox="0 0 24 24" style="width: 24px; height: 24px; fill: white;"><path d="M19 13h-6v6h-2v-6H5v-2h6V5h2v6h6v2z"/></svg></a></div>
+        <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M21 4H3c-1.1 0-1.99.9-1.99 2L1 18c0 1.1.9 2 2 2h18c1.1 0 2-.9 2-2V6c0-1.1-.9-2-2-2zm0 14H3V8h18v10z"/></svg><span>To'lovlar</span></a>
+        <a href="menu.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Menyu</span></a>
+    </div>
+
+    <script>
+        function getDebtorsData() {
+            const students = JSON.parse(localStorage.getItem('students')) || [];
+            return students.filter(s => s.status === "Qarzdor" || s.status === "Qarz" || Number(s.debtAmount) > 0);
+        }
+
+        function loadDebtors() {
+            const debtors = getDebtorsData();
+            const container = document.getElementById('debtorsListContainer');
+            const countElement = document.getElementById('totalDebtorsCount');
+            const amountElement = document.getElementById('totalDebtAmount');
+            
+            if (debtors.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:#64748b; padding: 20px 0; font-size: 13px;">Hozircha qarzdorlar mavjud emas.</div>`;
+                countElement.innerText = "0 ta";
+                amountElement.innerText = "0 so'm";
+                return;
+            }
+
+            let totalDebt = 0;
+            container.innerHTML = '';
+            debtors.forEach(d => {
+                const debtVal = Number(d.debtAmount) || 0;
+                totalDebt += debtVal;
+                container.innerHTML += `
+                    <div class="debtor-item">
+                        <div class="debtor-info">
+                            <h4>${d.name || 'Ismsiz'}</h4>
+                            <p>${d.group || "Guruh belgilanmagan"}</p>
+                        </div>
+                        <div class="debtor-amount">
+                            <h4>${debtVal.toLocaleString()} so'm</h4>
+                            <p>Qarzdor</p>
+                        </div>
+                    </div>
+                `;
+            });
+
+            countElement.innerText = debtors.length + " ta";
+            amountElement.innerText = totalDebt.toLocaleString() + " so'm";
+        }
+
+        function filterDebtors() {
+            const query = document.getElementById('searchInput').value.toLowerCase();
+            const debtors = getDebtorsData();
+            const container = document.getElementById('debtorsListContainer');
+
+            const filtered = debtors.filter(d => 
+                (d.name && d.name.toLowerCase().includes(query)) || 
+                (d.group && d.group.toLowerCase().includes(query))
+            );
+
+            if (filtered.length === 0) {
+                container.innerHTML = `<div style="text-align:center; color:#64748b; padding: 20px 0; font-size: 13px;">Hech narsa topilmadi.</div>`;
+                return;
+            }
+
+            container.innerHTML = '';
+            filtered.forEach(d => {
+                const debtVal = Number(d.debtAmount) || 0;
+                container.innerHTML += `
+                    <div class="debtor-item">
+                        <div class="debtor-info">
+                            <h4>${d.name || 'Ismsiz'}</h4>
+                            <p>${d.group || "Guruh belgilanmagan"}</p>
+                        </div>
+                        <div class="debtor-amount">
+                            <h4>${debtVal.toLocaleString()} so'm</h4>
+                            <p>Qarzdor</p>
+                        </div>
+                    </div>
+                `;
+            });
+        }
+
+        window.onload = loadDebtors;
+    </script>
+</body>
+</html>
