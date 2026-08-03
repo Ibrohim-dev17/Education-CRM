@@ -1,0 +1,107 @@
+<!DOCTYPE html>
+<html lang="uz">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Davomat statistikasi</title>
+    <style>
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif; }
+        body { background-color: #fff; color: #111; display: flex; flex-direction: column; min-height: 100vh; max-width: 480px; margin: 0 auto; position: relative; }
+        .content { flex: 1; overflow-y: auto; padding: 16px 20px 90px 20px; display: flex; flex-direction: column; gap: 16px; }
+        .app-header { display: flex; align-items: center; justify-content: space-between; padding: 12px 20px; background: #fff; position: sticky; top: 0; z-index: 10; border-bottom: 1px solid #F0F2F5; }
+        .app-header h1 { font-size: 17px; font-weight: 600; color: #111; }
+        .action-btn { background: none; border: none; cursor: pointer; display: flex; align-items: center; color: #111; text-decoration: none; }
+        .month-box { display: flex; justify-content: space-between; align-items: center; padding: 14px 16px; background: #ffffff; border: 1px solid #E5E7EB; border-radius: 14px; font-size: 14px; font-weight: 600; }
+        .card-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+        .stat-card { border-radius: 16px; padding: 16px; border: 1px solid #E5E7EB; background: #fff; display: flex; flex-direction: column; gap: 6px; }
+        .stat-card span { font-size: 12px; font-weight: 600; color: #6B7280; }
+        .stat-card .val { font-size: 20px; font-weight: 700; color: #111; }
+        .stats-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; }
+        .mini-card { background: #F9FAFB; border: 1px solid #E5E7EB; border-radius: 14px; padding: 12px; display: flex; flex-direction: column; gap: 4px; }
+        .mini-card span { font-size: 11px; font-weight: 600; color: #6B7280; }
+        .mini-card .val { font-size: 16px; font-weight: 700; color: #111; }
+        .chart-box { background: #fff; border: 1px solid #E5E7EB; border-radius: 16px; padding: 16px; }
+        .chart-box h4 { font-size: 14px; font-weight: 600; margin-bottom: 12px; }
+        .empty-chart { height: 130px; display: flex; align-items: center; justify-content: center; color: #9CA3AF; font-size: 12px; font-style: italic; }
+        .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; max-width: 480px; margin: 0 auto; height: 75px; background: #ffffff; border-top: 1px solid #F0F2F5; display: flex; justify-content: space-around; align-items: center; padding: 0 10px 10px 10px; z-index: 100; }
+        .nav-item { display: flex; flex-direction: column; align-items: center; text-decoration: none; color: #9CA3AF; font-size: 10px; gap: 4px; flex: 1; }
+        .nav-item.active { color: #0066FF; }
+        .nav-item svg { width: 22px; height: 22px; fill: currentColor; }
+        .nav-center-btn-wrapper { flex: 1; display: flex; justify-content: center; position: relative; top: -14px; }
+        .nav-center-btn { width: 48px; height: 48px; background-color: #0066FF; border-radius: 50%; display: flex; align-items: center; justify-content: center; border: none; box-shadow: 0 4px 12px rgba(0,102,255,0.4); cursor: pointer; color: #fff; text-decoration: none; }
+    </style>
+</head>
+<body>
+    <div class="app-header">
+        <h1>Davomat statistikasi</h1>
+        <a href="attendance.html" class="action-btn"><svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="4" width="18" height="18" rx="2" ry="2"></rect><line x1="16" y1="2" x2="16" y2="6"></line><line x1="8" y1="2" x2="8" y2="6"></line><line x1="3" y1="10" x2="21" y2="10"></line></svg></a>
+    </div>
+    <div class="content">
+        <div class="month-box">
+            <span id="statMonth">May, 2024</span>
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 9l6 6 6-6"/></svg>
+        </div>
+        <div class="card-grid">
+            <div class="stat-card">
+                <span>Jami darslar</span>
+                <div class="val" id="totalClasses">0</div>
+            </div>
+            <div class="stat-card">
+                <span>Kelgan darslar</span>
+                <div class="val" id="totalAttended">0</div>
+            </div>
+        </div>
+        <div class="stats-row">
+            <div class="mini-card">
+                <span>Kelgan</span>
+                <div class="val" id="countKeldi">0</div>
+            </div>
+            <div class="mini-card">
+                <span>Kechikkan</span>
+                <div class="val" id="countKechikdi">0</div>
+            </div>
+            <div class="mini-card">
+                <span>Kelmagan</span>
+                <div class="val" id="countKelmadi">0</div>
+            </div>
+        </div>
+        <div class="chart-box">
+            <h4>Kunlik statistika</h4>
+            <div class="empty-chart" id="chartStatusText">Ma'lumotlar kiritilmagan</div>
+        </div>
+    </div>
+    <div class="bottom-nav">
+        <a href="dashboard.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M12 3L2 12h3v8h6v-6h2v6h6v-8h3L12 3z"/></svg><span>Bosh sahifa</span></a>
+        <a href="students.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M16 11c1.66 0 2.99-1.34 2.99-3S17.66 5 16 5c-1.66 0-3 1.34-3 3s1.34 3 3 3zm-8 0c1.66 0 2.99-1.34 2.99-3S9.66 5 8 5C6.34 5 5 6.34 5 8s1.34 3 3 3zm0 2c-2.33 0-7 1.17-7 3.5V19h14v-2.5c0-2.33-4.67-3.5-7-3.5zm8 0c-.29 0-.62.02-.97.05 1.16.84 1.97 1.97 1.97 3.45V19h6v-2.5c0-2.33-4.67-3.5-7-3.5z"/></svg><span>O'quvchilar</span></a>
+        <div class="nav-center-btn-wrapper"><a href="add_student.html" class="nav-center-btn"><svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><line x1="12" y1="5" x2="12" y2="19"></line><line x1="5" y1="12" x2="19" y2="12"></line></svg></a></div>
+        <a href="payments.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M20 4H4c-1.11 0-1.99.89-1.99 2L2 18c0 1.11.89 2 2 2h16c1.11 0 2-.89 2-2V6c0-1.11-.89-2-2-2zm0 14H4v-6h16v6zm0-10H4V6h16v2z"/></svg><span>To'lovlar</span></a>
+        <a href="menu.html" class="nav-item"><svg viewBox="0 0 24 24"><path d="M3 13h8V3H3v10zm0 8h8v-6H3v6zm10 0h8V11h-8v10zm0-18v6h8V3h-8z"/></svg><span>Menyu</span></a>
+    </div>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const attendanceData = JSON.parse(localStorage.getItem('attendance_records') || '[]');
+            
+            let keldi = 0, kechikdi = 0, kelmadi = 0;
+            attendanceData.forEach(item => {
+                if(item.status === 'keldi') keldi++;
+                else if(item.status === 'kechikdi') kechikdi++;
+                else if(item.status === 'kelmadi') kelmadi++;
+            });
+
+            let totalAtt = keldi + kechikdi;
+            let totalClasses = attendanceData.length > 0 ? 1 : 0;
+
+            document.getElementById('totalClasses').innerText = totalClasses;
+            document.getElementById('totalAttended').innerText = totalAtt;
+            document.getElementById('countKeldi').innerText = keldi;
+            document.getElementById('countKechikdi').innerText = kechikdi;
+            document.getElementById('countKelmadi').innerText = kelmadi;
+
+            if(attendanceData.length > 0) {
+                document.getElementById('chartStatusText').innerHTML = `<span style="color:#27ae60;">Davomat saqlangan. Jami yozuvlar: ${attendanceData.length} ta</span>`;
+            }
+        });
+    </script>
+</body>
+</html>
